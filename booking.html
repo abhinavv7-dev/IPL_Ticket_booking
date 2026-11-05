@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Tickets - IPL 2026</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h2>IPL 2026</h2>
+            <ul>
+                <li><a href="index.html#matches">Matches</a></li>
+                <li><a href="booking.html">Book Ticket</a></li>
+                <li><a href="index.html#my-bookings">My Bookings</a></li>
+                <li><a href="index.html#guidelines">Guidelines</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="book-ticket">
+        <h2>Book Your IPL Match Tickets</h2>
+        <p>Please complete the form below. All required fields are marked with an asterisk (*).</p>
+        <br>
+
+        <form id="standalone-booking-form" action="#" method="POST">
+            <!-- Full Name -->
+            <div>
+                <label for="user-name">Full Name *</label>
+                <input 
+                    type="text" 
+                    id="user-name" 
+                    name="userName" 
+                    placeholder="Enter your full name" 
+                    required 
+                    minlength="3" 
+                    maxlength="50"
+                >
+            </div>
+
+            <!-- Email Address -->
+            <div>
+                <label for="user-email">Email Address *</label>
+                <input 
+                    type="email" 
+                    id="user-email" 
+                    name="userEmail" 
+                    placeholder="example@domain.com" 
+                    required
+                >
+            </div>
+
+            <!-- Phone Number -->
+            <div>
+                <label for="user-phone">Phone Number *</label>
+                <input 
+                    type="tel" 
+                    id="user-phone" 
+                    name="userPhone" 
+                    placeholder="10-digit mobile number" 
+                    required 
+                    pattern="[0-9]{10}" 
+                    maxlength="10"
+                >
+            </div>
+
+            <!-- Match Selection Dropdown -->
+            <div>
+                <label for="match-select">Select Match *</label>
+                <select id="match-select" name="matchSelect" required>
+                    <option value="">-- Select an IPL Match --</option>
+                    <option value="Match 1">Match 1: CSK vs RCB (Bengaluru)</option>
+                    <option value="Match 2">Match 2: MI vs KKR (Mumbai)</option>
+                    <option value="Match 3">Match 3: GT vs RR (Ahmedabad)</option>
+                </select>
+            </div>
+
+            <!-- Stand Category Dropdown -->
+            <div>
+                <label for="stand-category">Stand Category *</label>
+                <select id="stand-category" name="standCategory" required>
+                    <option value="">-- Choose Category --</option>
+                    <option value="General">General Stand (₹1,500)</option>
+                    <option value="Premium">Premium Stand (₹3,500)</option>
+                    <option value="VIP">VIP Hospitality (₹8,000)</option>
+                </select>
+            </div>
+
+            <!-- Number of Tickets -->
+            <div>
+                <label for="ticket-quantity">Number of Tickets * (Max 10)</label>
+                <input 
+                    type="number" 
+                    id="ticket-quantity" 
+                    name="ticketQuantity" 
+                    value="1" 
+                    min="1" 
+                    max="10" 
+                    required
+                >
+            </div>
+
+            <!-- Additional Preferences (Checkboxes/Radio Buttons) -->
+            <div>
+                <label>Add-on Preferences:</label>
+                <div>
+                    <input type="checkbox" id="addon-parking" name="addons" value="parking">
+                    <label for="addon-parking">Include Stadium Parking Pass (+₹200)</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="addon-merch" name="addons" value="merch">
+                    <label for="addon-merch">Official Team Fan Jersey (+₹1,200)</label>
+                </div>
+            </div>
+
+            <!-- Delivery Preference Radio Buttons -->
+            <div>
+                <label>Ticket Delivery Method *</label>
+                <div>
+                    <input type="radio" id="delivery-e-ticket" name="deliveryMethod" value="e-ticket" checked required>
+                    <label for="delivery-e-ticket">Digital E-Ticket (Email / SMS)</label>
+                </div>
+                <div>
+                    <input type="radio" id="delivery-physical" name="deliveryMethod" value="physical">
+                    <label for="delivery-physical">Home Courier Delivery</label>
+                </div>
+            </div>
+
+            <!-- Form Action Buttons -->
+            <div>
+                <button type="submit">Submit & Book</button>
+                <button type="reset" style="background-color: #64748b; margin-top: 0.5rem;">Reset Form</button>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 IPL Ticket Booking. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
