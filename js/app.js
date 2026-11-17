@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     
     // =========================================================================
-    // 1. Toast Notification System (Activity 4)
+    // 1. Toast Notification System
     // =========================================================================
     let toastContainer = document.getElementById('toast-container');
     if (!toastContainer) {
@@ -11,7 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(toastContainer);
     }
 
-    // Reusable showToast function
+    /**
+     * Reusable toast notification function.
+     * @param {string} message - Text message to display.
+     */
     window.showToast = function(message) {
         const toast = document.createElement('div');
         toast.className = 'toast';
@@ -19,12 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         toastContainer.appendChild(toast);
 
-        // Trigger animation
+        // Trigger CSS entry animation
         setTimeout(() => {
             toast.classList.add('show');
         }, 50);
 
-        // Automatically remove toast after 3 seconds
+        // Automatically dismiss toast after 3 seconds
         setTimeout(() => {
             toast.classList.remove('show');
             setTimeout(() => {
@@ -34,37 +37,131 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // =========================================================================
-    // 2. DOM Elements Selection
+    // 2. Activity 8: Responsive Navigation & Mobile Hamburger Menu
     // =========================================================================
-    // Match Schedule Elements
-    const bookButtons = document.querySelectorAll('#matches table td button');
-    const teamFilter = document.getElementById('team-filter');
-    const matchRows = document.querySelectorAll('#matches table tbody tr');
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navLinks = document.getElementById('nav-links');
 
-    // Booking Form Elements
-    const bookingForm = document.getElementById('booking-form');
+    if (hamburgerBtn && navLinks) {
+        // Toggle mobile navigation on hamburger click
+        hamburgerBtn.addEventListener('click', () => {
+            const isActive = hamburgerBtn.classList.toggle('active');
+            navLinks.classList.toggle('nav-active');
+            hamburgerBtn.setAttribute('aria-expanded', isActive);
+        });
+
+        // Close mobile menu automatically when any nav link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerBtn.classList.remove('active');
+                navLinks.classList.remove('nav-active');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Close menu if user clicks anywhere outside of navigation
+        document.addEventListener('click', (event) => {
+            if (!hamburgerBtn.contains(event.target) && !navLinks.contains(event.target)) {
+                hamburgerBtn.classList.remove('active');
+                navLinks.classList.remove('nav-active');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
+    // =========================================================================
+    // 3. Activity 8: Team Filter & Grid / List View Toggle for Match Cards
+    // =========================================================================
+    const teamFilter = document.getElementById('team-filter');
+    const matchCards = document.querySelectorAll('.match-card');
+    const gridViewBtn = document.getElementById('grid-view-btn');
+    const listViewBtn = document.getElementById('list-view-btn');
+    const matchesContainer = document.getElementById('matches-container');
+
+    // Filter match cards by selected team
+    if (teamFilter && matchCards.length > 0) {
+        teamFilter.addEventListener('change', () => {
+            const selectedTeam = teamFilter.value;
+            let visibleCount = 0;
+
+            matchCards.forEach(card => {
+                const teams = card.getAttribute('data-teams') || '';
+                if (selectedTeam === 'all' || teams.includes(selectedTeam)) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            const teamLabel = selectedTeam === 'all' ? 'All Teams' : selectedTeam;
+            showToast(`Filter: ${visibleCount} match(es) for ${teamLabel}`);
+        });
+    }
+
+    // Toggle between Grid View and List View
+    if (gridViewBtn && listViewBtn && matchesContainer) {
+        gridViewBtn.addEventListener('click', () => {
+            matchesContainer.classList.remove('list-view');
+            matchesContainer.classList.add('grid-view');
+            gridViewBtn.classList.add('active');
+            listViewBtn.classList.remove('active');
+            showToast('Switched to Grid View');
+        });
+
+        listViewBtn.addEventListener('click', () => {
+            matchesContainer.classList.remove('grid-view');
+            matchesContainer.classList.add('list-view');
+            listViewBtn.classList.add('active');
+            gridViewBtn.classList.remove('active');
+            showToast('Switched to List View');
+        });
+    }
+
+    // =========================================================================
+    // 4. Smooth Scroll & Auto-Select Match from Match Cards
+    // =========================================================================
     const matchSelect = document.getElementById('match-select');
+    const bookingSection = document.getElementById('book-ticket');
+    const cardBookButtons = document.querySelectorAll('.book-match-btn');
+
+    cardBookButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Smoothly scroll down to the booking form
+            if (bookingSection) {
+                bookingSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            const matchId = button.getAttribute('data-match');
+            const matchTeams = button.getAttribute('data-teams') || '';
+
+            // Auto-select match in the dropdown
+            if (matchSelect) {
+                for (let option of matchSelect.options) {
+                    if (option.value === matchId || option.text.includes(matchTeams)) {
+                        matchSelect.value = option.value;
+                        break;
+                    }
+                }
+                // Update the booking summary card in real-time
+                updateBookingSummary(false);
+            }
+
+            showToast(`Selected Match: ${matchTeams}`);
+        });
+    });
+
+    // =========================================================================
+    // 5. Activity 7: Dynamic Ticket Price & Summary Calculation
+    // =========================================================================
     const standCategory = document.getElementById('stand-category');
     const ticketQuantity = document.getElementById('ticket-quantity');
-    const userName = document.getElementById('user-name');
-    const userEmail = document.getElementById('user-email');
-    const userPhone = document.getElementById('user-phone');
-    const bookingSection = document.getElementById('book-ticket');
-
-    // Summary Card Elements
     const summaryMatch = document.getElementById('summary-match');
     const summaryStand = document.getElementById('summary-stand');
     const summaryPrice = document.getElementById('summary-price');
     const summaryQty = document.getElementById('summary-qty');
     const summaryTotal = document.getElementById('summary-total');
 
-    // My Bookings Table Elements
-    const bookingsList = document.getElementById('bookings-list');
-    const myBookingsSection = document.getElementById('my-bookings');
-
-    // =========================================================================
-    // 3. Activity 7: Dynamic Ticket Price & Summary Calculation
-    // =========================================================================
     // Stand Category Pricing Structure
     const standPrices = {
         'General': 1500,
@@ -74,11 +171,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Calculates the unit price, quantity, and total amount,
-     * then updates the booking summary card in real-time.
+     * updating the summary card in real-time.
      * @param {boolean} showNotification - Whether to trigger a toast notification.
      */
     function updateBookingSummary(showNotification = true) {
-        // Guard clause in case elements do not exist on the current page
         if (!summaryMatch || !summaryStand || !summaryPrice || !summaryQty || !summaryTotal) {
             return;
         }
@@ -90,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const selectedStand = (standCategory && standCategory.value) || 'General';
         
-        // Parse and validate quantity (must be between 1 and 10)
+        // Parse and validate quantity (1 to 10)
         let qty = ticketQuantity ? parseInt(ticketQuantity.value, 10) : 1;
         if (isNaN(qty) || qty < 1) {
             qty = 1;
@@ -98,18 +194,18 @@ document.addEventListener('DOMContentLoaded', () => {
             qty = 10;
         }
 
-        // When no match is chosen, price and total must show 0
+        // When no match is chosen, price and total show 0
         const unitPrice = isMatchSelected ? (standPrices[selectedStand] || 0) : 0;
         const totalPrice = unitPrice * qty;
 
-        // Dynamically update the summary card DOM elements
+        // Dynamically update DOM text
         summaryMatch.textContent = selectedMatchText;
         summaryStand.textContent = selectedStand;
         summaryPrice.textContent = unitPrice.toLocaleString('en-IN');
         summaryQty.textContent = qty;
         summaryTotal.textContent = totalPrice.toLocaleString('en-IN');
 
-        // Show toast notification when user changes values on an active selection
+        // Show toast notification if requested and match is selected
         if (showNotification && isMatchSelected) {
             showToast(`Summary updated: Total ₹${totalPrice.toLocaleString('en-IN')}`);
         }
@@ -123,69 +219,19 @@ document.addEventListener('DOMContentLoaded', () => {
         standCategory.addEventListener('change', () => updateBookingSummary(true));
     }
     if (ticketQuantity) {
-        // Live update while typing or clicking spinners
         ticketQuantity.addEventListener('input', () => updateBookingSummary(false));
-        // Confirm with toast once input loses focus or spinner completes change
         ticketQuantity.addEventListener('change', () => updateBookingSummary(true));
     }
 
     // =========================================================================
-    // 4. Smooth Scroll & Auto-Select Match from Match Schedule Table
+    // 6. Dynamic Booking Submission & "My Bookings" Persistence
     // =========================================================================
-    bookButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Smoothly scroll down to the booking form
-            if (bookingSection) {
-                bookingSection.scrollIntoView({ behavior: 'smooth' });
-            }
-
-            // Identify match details from the clicked row
-            const row = button.closest('tr');
-            if (row) {
-                const matchTeams = row.cells[1].textContent.trim();
-
-                // Auto-select match in dropdown if element exists
-                if (matchSelect) {
-                    for (let option of matchSelect.options) {
-                        if (option.text.includes(matchTeams)) {
-                            matchSelect.value = option.value;
-                            break;
-                        }
-                    }
-                    // Update summary card instantly with the newly selected match
-                    updateBookingSummary(false);
-                }
-
-                showToast(`Selected Match: ${matchTeams}`);
-            }
-        });
-    });
-
-    // =========================================================================
-    // 5. Match Schedule Team Filter
-    // =========================================================================
-    if (teamFilter && matchRows.length > 0) {
-        teamFilter.addEventListener('change', () => {
-            const selectedTeam = teamFilter.value;
-            let visibleCount = 0;
-
-            matchRows.forEach(row => {
-                const teams = row.cells[1]?.textContent.trim() || '';
-                if (selectedTeam === 'all' || teams.includes(selectedTeam)) {
-                    row.style.display = '';
-                    visibleCount++;
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-
-            showToast(`Filter applied: ${visibleCount} match(es) visible`);
-        });
-    }
-
-    // =========================================================================
-    // 6. Activity 8: Dynamic Booking Submission & "My Bookings" Persistence
-    // =========================================================================
+    const bookingForm = document.getElementById('booking-form');
+    const userName = document.getElementById('user-name');
+    const userEmail = document.getElementById('user-email');
+    const userPhone = document.getElementById('user-phone');
+    const bookingsList = document.getElementById('bookings-list');
+    const myBookingsSection = document.getElementById('my-bookings');
     const LOCAL_STORAGE_KEY = 'ipl_ticket_bookings';
 
     /**
@@ -294,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Save to localStorage
             const bookings = getStoredBookings();
-            bookings.unshift(newBooking); // Add latest booking to top of list
+            bookings.unshift(newBooking);
             saveBookings(bookings);
 
             // Dynamically refresh the My Bookings table

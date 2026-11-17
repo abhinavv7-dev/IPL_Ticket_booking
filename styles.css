@@ -1,0 +1,994 @@
+/* ==========================================================================
+   IPL 2026 Ticket Booking - Main Stylesheet
+   Theme: Stadium-inspired (Deep Blue, Stadium Blue, and Gold Accents)
+   ========================================================================== */
+
+/* --- 1. Global Variables & Resets --- */
+:root {
+    --primary-color: #0f172a;       /* Deep Stadium Navy */
+    --stadium-blue: #1e3a8a;        /* Vibrant Stadium Blue */
+    --accent-color: #f59e0b;        /* Official IPL Gold / Amber */
+    --accent-hover: #d97706;        /* Darker Gold on hover */
+    --bg-light: #f8fafc;            /* Clean light grey background */
+    --card-bg: #ffffff;             /* Crisp white card background */
+    --text-dark: #0f172a;           /* Dark text */
+    --text-muted: #64748b;          /* Subdued secondary text */
+    --border-color: #cbd5e1;        /* Subtle slate borders */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+    padding-top: 72px; /* Offset for fixed navigation bar */
+}
+
+/* ==========================================================================
+   2. Header & Navigation (Flexbox Alignment & Mobile Hamburger)
+   ========================================================================== */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+    z-index: 1000;
+}
+
+/* Flexbox aligns brand logo and navigation menu */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    position: relative;
+}
+
+nav h2 {
+    color: var(--accent-color);
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Flexbox for navigation links */
+nav ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 1.8rem;
+}
+
+nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.4rem 0.2rem;
+    position: relative;
+    transition: color 0.25s ease;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--accent-color);
+    transition: width 0.25s ease;
+}
+
+nav ul li a:hover {
+    color: var(--accent-color);
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* Mobile Hamburger Menu Button */
+.hamburger {
+    display: none; /* Hidden by default on desktop */
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 22px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.hamburger .bar {
+    width: 100%;
+    height: 3px;
+    background-color: var(--accent-color);
+    border-radius: 4px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Hamburger animation to 'X' on toggle */
+.hamburger.active .bar:nth-child(1) {
+    transform: translateY(9.5px) rotate(45deg);
+}
+.hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+}
+.hamburger.active .bar:nth-child(3) {
+    transform: translateY(-9.5px) rotate(-45deg);
+}
+
+/* ==========================================================================
+   3. Hero Banner Section
+   ========================================================================== */
+#hero {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--stadium-blue) 100%);
+    color: #ffffff;
+    padding: 5.5rem 2rem;
+    text-align: center;
+    border-bottom: 4px solid var(--accent-color);
+}
+
+#hero h1 {
+    font-size: 2.75rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 800;
+}
+
+#hero p {
+    font-size: 1.25rem;
+    margin-bottom: 2.2rem;
+    color: #e2e8f0;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#hero div {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+#hero button {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    border: none;
+    padding: 0.9rem 2rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-md);
+}
+
+#hero button:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ==========================================================================
+   4. About IPL Section (CSS Grid)
+   ========================================================================== */
+#about {
+    max-width: 1200px;
+    margin: 3.5rem auto;
+    padding: 2.5rem;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+}
+
+#about h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 3px solid var(--accent-color);
+    display: inline-block;
+    padding-bottom: 0.3rem;
+}
+
+#about p {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+}
+
+#about h3 {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    margin: 1.8rem 0 0.8rem 0;
+}
+
+#about ul {
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1rem;
+    padding: 0;
+}
+
+#about ul li {
+    background-color: var(--bg-light);
+    padding: 0.85rem 1.2rem;
+    border-left: 4px solid var(--accent-color);
+    border-radius: 6px;
+    font-weight: 600;
+    color: var(--text-dark);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+#about ul li:hover {
+    transform: translateX(6px);
+    background-color: #e2e8f0;
+}
+
+/* ==========================================================================
+   5. Match Schedule Section (Controls, CSS Grid & List Views)
+   ========================================================================== */
+#matches {
+    max-width: 1200px;
+    margin: 3.5rem auto;
+    padding: 2.5rem;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+}
+
+#matches h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 3px solid var(--accent-color);
+    display: inline-block;
+    padding-bottom: 0.3rem;
+}
+
+/* Schedule Controls: Flexbox for Filter & View Toggle */
+.schedule-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.filter-group label {
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.filter-group select {
+    padding: 0.65rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    outline: none;
+    background-color: #ffffff;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filter-group select:focus {
+    border-color: var(--stadium-blue);
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
+}
+
+/* View Toggle Controls */
+.view-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.toggle-label {
+    font-weight: 700;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.view-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.view-btn:hover {
+    background-color: var(--bg-light);
+    border-color: var(--stadium-blue);
+}
+
+.view-btn.active {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border-color: var(--primary-color);
+}
+
+/* --- Matches Container: CSS Grid (Default Grid View) --- */
+#matches-container.grid-view {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+/* --- Matches Container: Flexbox (List View) --- */
+#matches-container.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+/* --- Match Card Styling --- */
+.match-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.match-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-color);
+}
+
+.match-card.hidden {
+    display: none !important;
+}
+
+.match-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.match-badge {
+    background-color: var(--primary-color);
+    color: var(--accent-color);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 0.3rem 0.65rem;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+.match-date {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.match-teams {
+    margin-bottom: 0.9rem;
+}
+
+.match-teams h3 {
+    font-size: 1.4rem;
+    color: var(--primary-color);
+    margin-bottom: 0.25rem;
+    font-weight: 800;
+}
+
+.match-teams .vs {
+    color: var(--accent-color);
+    font-weight: 900;
+    font-size: 1.15rem;
+    padding: 0 0.3rem;
+}
+
+.teams-full {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.35;
+}
+
+.match-venue {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.match-prices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 1.3rem;
+}
+
+.price-pill {
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    color: var(--text-dark);
+}
+
+.price-pill.vip {
+    border-color: #fde68a;
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.match-card button.book-match-btn {
+    width: 100%;
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    border: none;
+    padding: 0.8rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.match-card button.book-match-btn:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* --- List View Layout Variations --- */
+#matches-container.list-view .match-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2rem;
+    gap: 1.5rem;
+}
+
+#matches-container.list-view .match-card-header {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    min-width: 135px;
+}
+
+#matches-container.list-view .match-teams {
+    margin-bottom: 0;
+    min-width: 230px;
+}
+
+#matches-container.list-view .match-venue {
+    margin-bottom: 0;
+    min-width: 220px;
+}
+
+#matches-container.list-view .match-prices {
+    margin-bottom: 0;
+}
+
+#matches-container.list-view .match-card button.book-match-btn {
+    width: auto;
+    padding: 0.75rem 1.6rem;
+    white-space: nowrap;
+}
+
+/* ==========================================================================
+   6. Ticket Booking & Live Summary Section (Activity 7)
+   ========================================================================== */
+#book-ticket {
+    max-width: 1200px;
+    margin: 3.5rem auto;
+    padding: 2.5rem;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+}
+
+#book-ticket h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 3px solid var(--accent-color);
+    display: inline-block;
+    padding-bottom: 0.3rem;
+}
+
+/* Flexbox container for Form & Summary Card */
+.booking-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+#booking-form {
+    flex: 1 1 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+#booking-form div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+#booking-form label {
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+#booking-form input,
+#booking-form select {
+    padding: 0.85rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#booking-form input:focus,
+#booking-form select:focus {
+    border-color: var(--stadium-blue);
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
+}
+
+#booking-form button[type="submit"] {
+    background-color: var(--stadium-blue);
+    color: #ffffff;
+    border: none;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 0.8rem;
+    transition: var(--transition);
+}
+
+#booking-form button[type="submit"]:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Booking Summary Card */
+.summary-card {
+    flex: 1 1 320px;
+    background-color: var(--bg-light);
+    padding: 2.2rem;
+    border-radius: 10px;
+    border-top: 4px solid var(--accent-color);
+    box-shadow: var(--shadow-sm);
+    height: fit-content;
+}
+
+.summary-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.2rem;
+    font-size: 1.35rem;
+    font-weight: 800;
+}
+
+.summary-card p {
+    margin-bottom: 0.85rem;
+    font-size: 1.05rem;
+    color: var(--text-dark);
+}
+
+.summary-card hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 1.2rem 0;
+}
+
+/* ==========================================================================
+   7. My Bookings Section (Dynamic Table & LocalStorage)
+   ========================================================================== */
+#my-bookings {
+    max-width: 1200px;
+    margin: 3.5rem auto;
+    padding: 2.5rem;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+}
+
+#my-bookings h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 3px solid var(--accent-color);
+    display: inline-block;
+    padding-bottom: 0.3rem;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 1rem 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+table th {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+}
+
+table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.badge-confirmed {
+    display: inline-block;
+    background-color: #dcfce7;
+    color: #15803d;
+    padding: 0.3rem 0.75rem;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.booking-id-tag {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 800;
+    color: var(--primary-color);
+    background-color: var(--bg-light);
+    padding: 0.25rem 0.55rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.empty-bookings {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 2.5rem !important;
+    font-style: italic;
+    font-size: 1.05rem;
+}
+
+/* ==========================================================================
+   8. Matchday Guidelines Section (CSS Grid 3-Column Section)
+   ========================================================================== */
+#guidelines {
+    max-width: 1200px;
+    margin: 3.5rem auto;
+    padding: 2.5rem;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+}
+
+#guidelines h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 3px solid var(--accent-color);
+    display: inline-block;
+    padding-bottom: 0.3rem;
+}
+
+/* CSS Grid for Guidelines as a 3-column section */
+.guidelines-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: var(--bg-light);
+    padding: 1.8rem;
+    border-radius: 10px;
+    border-top: 4px solid var(--primary-color);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.card h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.8rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.card p {
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   9. Footer
+   ========================================================================== */
+footer {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 4.5rem;
+}
+
+footer p {
+    font-size: 0.95rem;
+    color: #cbd5e1;
+}
+
+/* ==========================================================================
+   10. Toast Notification System
+   ========================================================================== */
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    padding: 14px 22px;
+    border-radius: 8px;
+    border-left: 5px solid var(--accent-color);
+    box-shadow: var(--shadow-lg);
+    font-size: 0.95rem;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   11. Media Queries for Responsive Layout (Tablets & Mobile)
+   ========================================================================== */
+
+/* Large Tablets & Small Desktops (max-width: 1024px) */
+@media (max-width: 1024px) {
+    #matches-container.grid-view {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Tablets (max-width: 900px): Reflow Guidelines into Single Column */
+@media (max-width: 900px) {
+    .guidelines-container {
+        grid-template-columns: 1fr; /* Single column on tablets & phones */
+    }
+
+    .booking-container {
+        flex-direction: column; /* Stack booking form and summary card */
+    }
+
+    .summary-card {
+        width: 100%;
+    }
+}
+
+/* Mobile Phones (max-width: 768px): Reflow into Single Column & Hamburger */
+@media (max-width: 768px) {
+    body {
+        padding-top: 65px;
+    }
+
+    /* Mobile Navigation & Hamburger */
+    .hamburger {
+        display: flex;
+    }
+
+    nav ul {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--primary-color);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.35);
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease, padding 0.35s ease;
+        gap: 0;
+    }
+
+    nav ul.nav-active {
+        max-height: 350px;
+        padding: 1rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    nav ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+    nav ul li a {
+        display: block;
+        padding: 0.85rem 1.5rem;
+        font-size: 1.1rem;
+    }
+
+    nav ul li a:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Hero Banner Mobile Adjustments */
+    #hero {
+        padding: 3.5rem 1.2rem;
+    }
+
+    #hero h1 {
+        font-size: 1.85rem;
+    }
+
+    #hero p {
+        font-size: 1rem;
+        margin-bottom: 1.8rem;
+    }
+
+    #hero div {
+        flex-direction: column;
+        gap: 0.8rem;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    #hero button {
+        width: 100%;
+    }
+
+    /* Container Spacing */
+    #about, #matches, #book-ticket, #my-bookings, #guidelines {
+        margin: 1.8rem 1rem;
+        padding: 1.5rem;
+    }
+
+    /* Schedule Controls on Mobile */
+    .schedule-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .view-toggle {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    /* Matches Container Reflow into Single Column */
+    #matches-container.grid-view {
+        grid-template-columns: 1fr; /* Single column */
+    }
+
+    #matches-container.list-view .match-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+
+    #matches-container.list-view .match-card-header,
+    #matches-container.list-view .match-teams,
+    #matches-container.list-view .match-venue,
+    #matches-container.list-view .match-prices {
+        min-width: 100%;
+    }
+
+    #matches-container.list-view .match-card button.book-match-btn {
+        width: 100%;
+    }
+
+    table {
+        min-width: 600px;
+    }
+}
+
+/* Extra Small Phones (max-width: 480px) */
+@media (max-width: 480px) {
+    #about ul {
+        grid-template-columns: 1fr;
+    }
+
+    #hero h1 {
+        font-size: 1.5rem;
+    }
+
+    .match-teams h3 {
+        font-size: 1.25rem;
+    }
+
+    nav h2 {
+        font-size: 1.35rem;
+    }
+}
