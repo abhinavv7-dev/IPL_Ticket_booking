@@ -1,0 +1,35 @@
+/* ==========================================================================
+   Global Resets & Design Tokens (Stadium Theme)
+   ========================================================================== */
+:root {
+  --primary-color: #0f172a;       /* Deep Stadium Navy */
+  --stadium-blue: #1e3a8a;        /* Vibrant Stadium Blue */
+  --accent-color: #f59e0b;        /* Official IPL Gold / Amber */
+  --accent-hover: #d97706;        /* Darker Gold on hover */
+  --bg-light: #f8fafc;            /* Clean light grey background */
+  --card-bg: #ffffff;             /* Crisp white card background */
+  --text-dark: #0f172a;           /* Dark text */
+  --text-muted: #64748b;          /* Subdued secondary text */
+  --border-color: #cbd5e1;        /* Subtle slate borders */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
