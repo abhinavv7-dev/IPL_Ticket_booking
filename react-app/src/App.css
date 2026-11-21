@@ -856,3 +856,97 @@ footer {
     min-width: 600px;
   }
 }
+
+/* ==========================================================================
+   Supabase Database Status & Realtime Enhancements
+   ========================================================================== */
+.db-status-bar {
+  background-color: var(--primary-color);
+  border-bottom: 2px solid rgba(245, 158, 11, 0.3);
+  padding: 0.6rem 2rem;
+}
+
+.db-status-indicator {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.online {
+  background-color: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+}
+
+.status-dot.offline {
+  background-color: #f59e0b;
+  box-shadow: 0 0 8px #f59e0b;
+}
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-header-row h2 {
+  margin-bottom: 0 !important;
+}
+
+.live-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  background-color: #dbeafe;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+
+.loading-spinner {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.match-seats {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #15803d;
+  background-color: #dcfce7;
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  margin-bottom: 0.85rem;
+  width: fit-content;
+}
+
+.match-seats.sold-out {
+  color: #b91c1c;
+  background-color: #fee2e2;
+}
+
+.book-match-btn.btn-disabled {
+  background-color: #94a3b8 !important;
+  color: #ffffff !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
